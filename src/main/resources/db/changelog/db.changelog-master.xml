@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog>
+    <changeSet id="1" author="adrian">
+        <createTable tableName="user">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" />
+            </column>
+            <column name="username" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="password" type="varchar(255)">
+                <constraints nullable="false" />
+            </column>
+            <column name="phone_number" type="varchar(20)">
+                <constraints unique="true" nullable="false" />
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false" />
+        </createTable>
+    </changeSet>
+
+    <changeSet id="2" author="adrian">
+        <createTable tableName="court">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="surface_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false"/>
+        </createTable>
+    </changeSet>
+
+    <changeSet id="4" author="adrian">
+        <createTable tableName="reservation">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="court_id" type="bigint">
+                <constraints nullable="false"/>
+                <foreignKeyConstraint baseColumnNames="court_id"
+                                      baseTableName="reservation"
+                                      referencedTableName="court"
+                                      referencedColumnNames="id"
+                                      constraintName="fk_reservation_court"/>
+            </column>
+            <column name="user_id" type="bigint">
+                <constraints nullable="false"/>
+                <foreignKeyConstraint baseColumnNames="user_id"
+                                      baseTableName="reservation"
+                                      referencedTableName="user"
+                                      referencedColumnNames="id"
+                                      constraintName="fk_reservation_user"/>
+            </column>
+            <column name="reservation_time" type="timestamp">
+                <constraints nullable="false"/>
+            </column>
+            <column name="game_type" type="varchar(50)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="deleted" type="boolean" defaultValue="false"/>
+        </createTable>
+    </changeSet>
+</databaseChangeLog>
